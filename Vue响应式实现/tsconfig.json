@@ -6,7 +6,14 @@
     "outDir": "./dist", // 编译后的js所存放的目录
     "strict": true,
     "removeComments": true,
-    "esModuleInterop": true // 启用ES模块化交互非ES模块导出
+    "esModuleInterop": true, // 启用ES模块化交互非ES模块导出
+    "allowImportingTsExtensions": false,
+    "noEmit": false,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*", "*.ts"]
+    }
   },
   "include": ["./src"] // 默认编译项目目录下所有的ts文件，这里表示只编译src目录下的ts文件
 }
