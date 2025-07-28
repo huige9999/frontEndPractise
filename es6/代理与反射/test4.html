@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
 
@@ -12,20 +11,19 @@
     <div id="container">
 
     </div>
-
     <script>
-        //创建一个观察者
         function observer(target) {
-            const div = document.getElementById("container");
+             const div = document.getElementById("container");
             const proxy = new Proxy(target, {
-                set(target, prop, value) {
-                    Reflect.set(target, prop, value);
-                    render();
+                get(target,prop,receiver) {
+                    return Reflect.get(...arguments);
                 },
-                get(target, prop){
-                    return Reflect.get(target, prop);
+                set(target,prop, value, receiver) {
+                    Reflect.set(...arguments);
+                    render();
                 }
             })
+
             render();
 
             function render() {
@@ -37,14 +35,15 @@
                 }
                 div.innerHTML = html;
             }
-
+        
             return proxy;
+        
         }
         const target = {
             a: 1,
             b: 2
         }
-        const obj = observer(target)
+        const obj = observer(target);
     </script>
 </body>
 
