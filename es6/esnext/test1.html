@@ -8,23 +8,25 @@
 </head>
 
 <body>
+    <p><input type="text" class="num1"></p>
+    <p><input type="text" class="num2"></p>
+    <button class="sum-btn">求和</button>
     <script>
-        class Counter {
-            #count = 0;
-           
-            increase() {
-                this.#count++;
-            }
-            getCount() {
-                return this.#count;
-            }
-        }
+      const num1 = document.querySelector('.num1');
+      const num2 = document.querySelector('.num2');
+      const sumBtn = document.querySelector('.sum-btn');
 
-
-        const counter = new Counter();
-        counter.increase();
-        console.log(counter.getCount());
-        counter.#count = 10;
+      sumBtn.addEventListener('click', () => {
+          const a = parseFloat(num1.value);
+          const b = parseFloat(num2.value);
+          import('./utils/index.js').then(module => {
+            console.log('Module loaded:', module);
+              const result = module.sum(a, b);
+              alert(`结果是: ${result}`);
+          }).catch(err => {
+              console.error('Error loading module:', err);
+          });
+      });
 
     </script>
 </body>
