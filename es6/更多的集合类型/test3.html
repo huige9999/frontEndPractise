@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        class MyMap {
+            constructor(iterable = []) {
+                this.keys = [];
+                this.values = [];
+                for (const [key, value] of iterable) {
+                    this.set(key, value);
+                }
+            }
+            get size() {
+                return this.keys.length;
+            }
+            set(key, value) {
+                const index = this.keys.indexOf(key);
+                if (index > -1) {
+                    // 键已经存在 更新值
+                    this.values[index] = value;
+                } else {
+                    this.keys.push(key);
+                    this.values.push(value);
+                }
+                return this;
+            }
+            get(key) {
+                const index = this.keys.indexOf(key);
+                return index > -1 ? this.values[index] : undefined;
+            }
+            has(key) {
+                return this.keys.includes(key);
+            }
+            delete(key) {
+                const index = this.keys.indexOf(key);
+                if(index > -1) {
+                    this.keys.splice(index, 1);
+                    this.values.splice(index, 1);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            clear() {
+                this.keys = [];
+                this.values = [];
+            }
+        
+            *[Symbol.iterator]() {
+                for (let i = 0;i < this.keys.length;i++) {
+                    yield [this.keys[i], this.values[i]]
+                }
+            }
+        
+        }
+    </script>
+</body>
+
+</html>

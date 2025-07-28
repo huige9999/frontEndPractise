@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const setA = new Set([1, 2, 3, 4]);
+        const setB = new Set([3, 4, 5, 6]);
+
+        // 并集
+        // const setR1 = new Set([...setA,...setB]);
+        // console.log(setR1);
+
+
+        // 交集
+        const setR2 = new Set([...setA].filter((item) => setB.has(item)))
+        console.log(setR2);
+
+        // 差集 setA - setB
+        const setR3 = new Set([...setA].filter((item) => !setB.has(item)))
+        console.log(setR3);
+
+    </script>
+</body>
+
+</html>
