@@ -1,9 +1,10 @@
-import React from "react";
-
-function Hello() {
+function Hello(props) {
+  console.log(props);
   return (
     <div>
-      <h1>Hello World</h1>
+      <h1>Hello Component</h1>
+      <p>Name: {props.stuInfo.name}</p>
+      <p>Age: {props.stuInfo.age}</p>
     </div>
   );
 }
