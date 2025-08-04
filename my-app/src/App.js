@@ -1,25 +1,27 @@
 import React from "react";
-import Hello from "./components/Hello"
-import World from "./components/Word";
+// function App() {
+
+//   const handleClick = () => {
+//     console.log('Button clicked');
+//   }
+
+//   return (
+//     <button onClick={handleClick}>Click me</button>
+//   );
+// }
 
 class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      name: "huige999",
-      age: 18
-    }
-  }
-
-  render() {
+   render() {
     return (
-      <>
-        <Hello stuInfo={this.state}/>
-        <World stuInfo={this.state}/>
-      </>
-    );
-  }
+      <a href="https://www.baidu.com" onClick={this.handleClick}>Click me</a>
+    )
+   }
+   handleClick = (e) => {
+    e.preventDefault();
+    console.log(e,e.nativeEvent);
+   }
 }
+
 
 
 export default App;
