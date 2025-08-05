@@ -1,27 +1,11 @@
-import React from "react";
-// function App() {
+import RegistrationForm from "./components/RegistrationForm";
 
-//   const handleClick = () => {
-//     console.log('Button clicked');
-//   }
-
-//   return (
-//     <button onClick={handleClick}>Click me</button>
-//   );
-// }
-
-class App extends React.Component {
-   render() {
+function App() {
     return (
-      <a href="https://www.baidu.com" onClick={this.handleClick}>Click me</a>
+        <>
+        <RegistrationForm />
+        </>
     )
-   }
-   handleClick = (e) => {
-    e.preventDefault();
-    console.log(e,e.nativeEvent);
-   }
 }
-
-
 
 export default App;
