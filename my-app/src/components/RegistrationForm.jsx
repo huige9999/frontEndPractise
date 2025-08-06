@@ -1,109 +1,109 @@
 import React from 'react';
 
 
+
+const skillOptions = ['HTML', 'CSS', 'JavaScript', 'React', 'Node.js'];
+const educationOptions = ['高中', '大专', '本科', '研究生'];
+
+
 class RegistrationForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            agreeToTerms: false,
-            skills: {
-                html: false,
-                css: false,
-                javascript: false,
-                react: false,
-            },
-            education: '本科',
-            bio: '',
+            userForm: {
+                name: '',
+                password: '',
+                skill: '', // 如果选中HTML CSS则值为"HTML,CSS"
+                education: '',
+                avatar: ''
+            }
         }
+        // 定义头像的ref
         this.avatarRef = React.createRef();
     }
-    render() {
-        const { username, password, agreeToTerms } = this.state;
-        const isSubmitDisabled = !username || !password || !agreeToTerms;
-        return (
-            <form onSubmit={this.handleSubmit}>
-                <h2>用户注册</h2>
-                <div>
-                    <label>用户名</label>
-                    <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
-                </div>
-                <div>
-                    <label>密码</label>
-                    <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
-                </div>
-                <div>
-                    <label>技术栈</label>
-                    {Object.keys(this.state.skills).map(skill => (
-                        <div key={skill}>
-                            <label>{skill}</label>
-                            <input type="checkbox" name={skill} checked={this.state.skills[skill]} onChange={this.handleSkillsChange} />
-                        </div>
-                    ))}
-                </div>
-                <div>
-                    <label>教育背景</label>
-                    <select name="education" value={this.state.education} onChange={this.handleChange}>
-                        <option value="本科">本科</option>
-                        <option value="专科">专科</option>
-                        <option value="硕士">硕士</option>
-                        <option value="博士">博士</option>
-                    </select>
-                </div>
-                <div>
-                    <label>个人简介</label>
-                    <textarea name="bio" value={this.state.bio} onChange={this.handleChange} />
-                </div>
-                <div>
-                    <label>
-                        同意用户协议
-                    </label>
-                    <input type="checkbox" name="agreeToTerms" checked={this.state.agreeToTerms} onChange={this.handleChange} />
-                </div>
-                <div>
-                    <label>头像</label>
-                    <input type="file" ref={this.avatarRef} />
-                </div>
-                <button type="submit" disabled={isSubmitDisabled}>
-                    注册
-                </button>
-            </form>
-        )
-    }
-    handleChange = (e) => {
-        const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
-        })
-    }
+    onChange = (e) => {
+        const { name, value } = e.target;
+        // 如果name为skill，则需要处理多选框的情况
+        if (name === 'skill') {
+            // value(外界的) userForm.skill(本地的)
+            const skills = this.state.userForm.skill.split(',').filter(item => item); // 过滤掉空字符串
+            // 判断当前有没有这个技能，有的话就移除，没有的话就加入
+            if(skills.includes(value)) {
+                const newSkills = skills.filter((item) => item !== value);
+                this.setState((prevState) => ({
+                    userForm: {
+                        ...prevState.userForm,
+                        skill: newSkills.join(',')
+                    }
+                }), () => {
+                    console.log(this.state.userForm);
+                });
 
-    handleSkillsChange = (e) => {
-        const  { name, checked } = e.target;
-        // this.setState(preState => ({
-        //     skills: {
-        //         ...preState.skills,
-        //         [name]: checked
-        //     }
-        // }))
-        this.setState({
-            skills: {
-                ...this.state.skills,
-                [name]: checked
+            } else {
+                const newSkills = [...skills, value];
+                this.setState((prevState) => ({
+                    userForm: {
+                        ...prevState.userForm,
+                        skill: newSkills.join(',')
+                    }
+                }), () => {
+                    console.log(this.state.userForm);
+                })
             }
-        })
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const finalData = {
-            ...this.state,
-            avatar: this.avatarRef.current.files[0] || null
+            return;
         }
-        console.log(finalData);
+
+
+        this.setState(prevState => ({
+            userForm: {
+                ...prevState.userForm,
+                [name]: value
+            }
+        }), () => {
+            console.log(this.state.userForm);
+        });
     }
+    render() {
+        return <>
+        <form>
+            <div className='formItem'>
+                <label>用户名</label>
+                <input type="text" value={this.state.userForm.name} onChange={this.onChange} name="name" placeholder='请输入用户名'/>
+            </div>
+            <div className="formItem">
+                <label>密码</label>
+                <input type="password" value={this.state.userForm.password} onChange={this.onChange} name="password" placeholder='请输入密码'/>
+            </div>
+            <div className="formItem">
+                <label>技能</label>
+                {
+                    skillOptions.map(option => (
+                    <label key={option}>
+                        <input type="checkbox" name="skill" value={option} checked={this.state.userForm.skill.includes(option)} onChange={this.onChange} />
+                        {option}
+                    </label>
+                    ))
+                }
+            </div>
+            <div className="formItem">
+                <label>教育背景</label>
+                <select name="education" value={this.state.userForm.education} onChange={this.onChange}>
+                    <option value="">请选择</option>
+                    {
+                        educationOptions.map(option => (
+                            <option key={option} value={option}>{option}</option>
+                        ))
+                    }
+                </select>
+            </div>
+            <div className="formItem">
+                <label>个人简介</label>
+                <textarea name="bio" value={this.state.userForm.bio} onChange={this.onChange} placeholder='请输入个人简介'></textarea>
+            </div>
+        </form>
+        </>
+    }
+   
 }
 
 export default RegistrationForm;

@@ -2,7 +2,7 @@
 创建一个用户注册表单。表单包含以下字段：
 用户名 (Username): 文本输入框。
 密码 (Password): 密码输入框。
-技术栈 (Skills): 一组多选框（例如：HTML, CSS, JavaScript, React）。
+技术l栈 (Skils): 一组多选框（例如：HTML, CSS, JavaScript, React）。
 教育背景 (Education): 下拉选择框（例如：高中, 大专, 本科, 研究生）。
 个人简介 (Bio): 文本域。
 头像 (Avatar): 文件上传。
