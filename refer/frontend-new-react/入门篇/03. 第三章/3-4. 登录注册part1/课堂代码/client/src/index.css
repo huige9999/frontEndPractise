@@ -1,8 +1,0 @@
-/**
-    全局 CSS 样式
-**/
-
-.ant-form-item-label>label {
-    width: 100px;
-    justify-content: flex-end;
-}
